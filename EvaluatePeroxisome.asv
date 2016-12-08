@@ -65,7 +65,6 @@ end
 
 % Need to create a less extreme mask for the test image
 locimgmask=image>8;
-
 locimgmaskarea=sum(sum(locimgmask));
 locimgsize=size(locimgmask);
 locimgtotarea=locimgsize(1,1)*locimgsize(1,2);
@@ -80,12 +79,10 @@ if perlocimfill<0.1
     Quantifymislocalization='None to quantify';
 else
     goodimgmask=image>80;
-    imshow(goodimgmask)
     goodmask_2=imerode(goodimgmask,strel('disk',2));
-    imshow(goodmask_2)
     goodmask_3=imdilate(goodmask_2,strel('disk',4));
-    imshow(goodmask_3)
     mislocalizedmask=locimgmask-goodmask_3;
-    imshow(mislocalizedmask);
     mismask=regionprops(mislocalizedmask,image,'MeanIntensity');
     Quantifymislocalization=mismask.MeanIntensity;
+end
+
